@@ -1,4 +1,4 @@
-package br.com.programadorthi.compose
+package br.com.programadorthi.compose.composables
 
 import android.content.res.Resources
 import androidx.compose.Composable
@@ -18,6 +18,7 @@ import androidx.ui.res.imageResource
 import androidx.ui.unit.Density
 import androidx.ui.unit.PxSize
 import androidx.ui.unit.toRect
+import br.com.programadorthi.compose.R
 import androidx.ui.foundation.Canvas as Board
 
 val overlayColor = Color(0xFFAA88AA)
@@ -56,19 +57,39 @@ fun Background() {
     val center = Offset(0f, screenHeight / 2f) + marginLeftOffset
 
     Stack {
-        Image(image = imageResource(R.drawable.background_blur))
+        Image(
+            image = imageResource(
+                R.drawable.background_blur
+            )
+        )
         Clip(shape = GenericShape {
             addOval(Rect.fromCircle(center = center, radius = clipRadius))
         }) {
-            Image(image = imageResource(R.drawable.background))
+            Image(
+                image = imageResource(
+                    R.drawable.background
+                )
+            )
         }
         WhiteCircleDraw(
             centerOffset = marginLeftOffset,
             circles = listOf(
-                Circle(radius = clipRadius, alpha = 0.10f),
-                Circle(radius = clipRadius + 30f, alpha = 0.20f),
-                Circle(radius = clipRadius + 80f, alpha = 0.30f),
-                Circle(radius = clipRadius + 200f, alpha = 0.35f)
+                Circle(
+                    radius = clipRadius,
+                    alpha = 0.10f
+                ),
+                Circle(
+                    radius = clipRadius + 30f,
+                    alpha = 0.20f
+                ),
+                Circle(
+                    radius = clipRadius + 80f,
+                    alpha = 0.30f
+                ),
+                Circle(
+                    radius = clipRadius + 200f,
+                    alpha = 0.35f
+                )
             )
         )
     }
@@ -77,6 +98,8 @@ fun Background() {
 @Composable
 fun WhiteCircleDraw(centerOffset: Offset = Offset.zero, circles: List<Circle>) {
     Board(modifier = LayoutSize.Fill, onCanvas = {
+        save()
+
         val parentSize = size
 
         val circleOffset = Offset(0f, parentSize.height.value / 2) + centerOffset
@@ -84,7 +107,12 @@ fun WhiteCircleDraw(centerOffset: Offset = Offset.zero, circles: List<Circle>) {
         for (index in 1 until circles.size) {
             val previousCircle = circles[index - 1]
 
-            maskCircle(this, parentSize, previousCircle.radius, centerOffset)
+            maskCircle(
+                this,
+                parentSize,
+                previousCircle.radius,
+                centerOffset
+            )
 
             overlayPaint.color = overlayColor.copy(
                 alpha = previousCircle.alpha
@@ -108,7 +136,12 @@ fun WhiteCircleDraw(centerOffset: Offset = Offset.zero, circles: List<Circle>) {
         val lastCircle = circles.last()
 
         // Mask the area of the final circle
-        maskCircle(this, parentSize, lastCircle.radius, centerOffset)
+        maskCircle(
+            this,
+            parentSize,
+            lastCircle.radius,
+            centerOffset
+        )
 
         // Draw an overlay that fills the rest of the screen
         overlayPaint.color = overlayColor.copy(
@@ -125,6 +158,8 @@ fun WhiteCircleDraw(centerOffset: Offset = Offset.zero, circles: List<Circle>) {
             radius = lastCircle.radius,
             paint = overlayBorderPaint
         )
+
+        restore()
     })
 }
 

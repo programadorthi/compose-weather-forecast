@@ -1,4 +1,4 @@
-package br.com.programadorthi.compose
+package br.com.programadorthi.compose.composables
 
 import androidx.compose.Composable
 import androidx.ui.core.Text
@@ -14,12 +14,13 @@ import androidx.ui.res.vectorResource
 import androidx.ui.text.TextStyle
 import androidx.ui.unit.TextUnit
 import androidx.ui.unit.dp
+import br.com.programadorthi.compose.R
 
 
 @Composable
 fun AppBar() {
     val surfaceColor = Color.Transparent
-    val icRefresh = vectorResource(id = R.drawable.ic_baseline_arrow_forward_ios_24)
+    val icDrawer = vectorResource(id = R.drawable.ic_baseline_arrow_forward_ios_24)
     val appBarHeight = 60.dp
     Surface(
         color = surfaceColor,
@@ -54,12 +55,12 @@ fun AppBar() {
                 }
                 Box(
                     modifier = LayoutSize(
-                        icRefresh.defaultWidth,
+                        icDrawer.defaultWidth,
                         appBarHeight
                     ) + LayoutAlign.Center
                 ) {
                     Clickable(onClick = { println(">>>>> i=clicked") }) {
-                        Icon(icon = icRefresh, tint = Color.White)
+                        Icon(icon = icDrawer, tint = Color.White)
                     }
                 }
             }
