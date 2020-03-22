@@ -23,6 +23,9 @@ data class DrawerController(
     val isOpening: Boolean
         get() = state == DrawerState.OPENING
 
+    val animationProgress: Dp
+        get() = animation.value
+
     fun close() {
         state = DrawerState.CLOSING
 

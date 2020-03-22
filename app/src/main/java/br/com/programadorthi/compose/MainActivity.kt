@@ -11,7 +11,6 @@ import androidx.ui.layout.LayoutGravity
 import androidx.ui.layout.LayoutPadding
 import androidx.ui.layout.Stack
 import androidx.ui.material.MaterialTheme
-import androidx.ui.unit.Duration
 import androidx.ui.unit.dp
 import br.com.programadorthi.compose.composables.AppBar
 import br.com.programadorthi.compose.composables.Background
@@ -25,11 +24,14 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            val animation = remember {
-                animatedValue(initVal = drawerWidth, converter = DpToVectorConverter)
-            }
             val controller = remember {
-                DrawerController(drawerWidth = drawerWidth, animation = animation)
+                DrawerController(
+                    drawerWidth = drawerWidth,
+                    animation = animatedValue(
+                        initVal = drawerWidth,
+                        converter = DpToVectorConverter
+                    )
+                )
             }
 
             MaterialTheme {
@@ -44,7 +46,7 @@ class MainActivity : AppCompatActivity() {
                     // TODO: clickable doesn't support HitTestBehavior
                     Box(
                         modifier = LayoutGravity.CenterEnd + LayoutOffset(
-                            dx = animation.value,
+                            dx = controller.animationProgress,
                             dy = 0.dp
                         )
                     ) {
