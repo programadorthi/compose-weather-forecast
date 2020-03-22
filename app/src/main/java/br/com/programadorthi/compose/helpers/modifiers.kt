@@ -23,15 +23,18 @@ data class LayoutFractionalOffset(val dx: Float, val dy: Float) : LayoutModifier
         childSize: IntPxSize,
         containerSize: IntPxSize
     ): IntPxPosition = IntPxPosition(
-        x = childSize.width * (MAX_FRACTION - coerce(dx)) *
-                if (layoutDirection == LayoutDirection.Ltr) 1f else -1f,
+        x = childSize.width * coerce(dx) *
+                if (layoutDirection == LayoutDirection.Ltr) MAX_FRACTION else MIN_FRACTION,
         y = childSize.height * coerce(dy)
     )
 
-    private fun coerce(value: Float) = MIN_FRACTION.coerceAtLeast(MAX_FRACTION.coerceAtMost(value))
+    private fun coerce(value: Float) =
+        MIN_FRACTION.coerceAtLeast(MAX_FRACTION.coerceAtMost(value))
 
-    private companion object {
+    companion object {
         private const val MAX_FRACTION = 1f
-        private const val MIN_FRACTION = 0f
+        private const val MIN_FRACTION = -1f
+
+        val Zero = LayoutFractionalOffset(0f, 0f)
     }
 }

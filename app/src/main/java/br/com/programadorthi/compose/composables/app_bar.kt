@@ -1,6 +1,8 @@
 package br.com.programadorthi.compose.composables
 
 import androidx.compose.Composable
+import androidx.compose.State
+import androidx.ui.core.Clip
 import androidx.ui.core.Text
 import androidx.ui.foundation.Box
 import androidx.ui.foundation.Clickable
@@ -15,13 +17,19 @@ import androidx.ui.text.TextStyle
 import androidx.ui.unit.TextUnit
 import androidx.ui.unit.dp
 import br.com.programadorthi.compose.R
+import br.com.programadorthi.compose.controllers.DrawerController
+import br.com.programadorthi.compose.models.DrawerItem
 
 
 @Composable
-fun AppBar(onMenuItemClick: () -> Unit) {
+fun AppBar(
+    controller: DrawerController,
+    state: State<DrawerItem>
+) {
     val surfaceColor = Color.Transparent
     val icDrawer = vectorResource(id = R.drawable.ic_baseline_arrow_forward_ios_24)
     val appBarHeight = 60.dp
+
     Surface(
         color = surfaceColor,
         contentColor = contentColorFor(color = surfaceColor),
@@ -37,13 +45,11 @@ fun AppBar(onMenuItemClick: () -> Unit) {
             children = {
                 Box {
                     Column {
-                        Text(
-                            text = "Thursday, August 29",
-                            style = TextStyle(
-                                color = Color.White,
-                                fontSize = TextUnit.Sp(16)
-                            )
-                        )
+                        Box {
+                            Clip(shape = RectangleShape) {
+                                AnimatedTitle(state.value)
+                            }
+                        }
                         Text(
                             text = "Sacramento",
                             style = TextStyle(
@@ -59,7 +65,9 @@ fun AppBar(onMenuItemClick: () -> Unit) {
                         appBarHeight
                     ) + LayoutAlign.Center
                 ) {
-                    Clickable(onClick = onMenuItemClick) {
+                    Clickable(onClick = {
+                        controller.open()
+                    }) {
                         Icon(icon = icDrawer, tint = Color.White)
                     }
                 }

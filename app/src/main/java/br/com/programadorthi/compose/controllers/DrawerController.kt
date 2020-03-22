@@ -25,7 +25,7 @@ data class DrawerController(
     fun close() {
         state = DrawerState.CLOSING
 
-        animation.animateTo(targetValue = 0f, onEnd = { _, _ ->
+        animation.animateTo(targetValue = 1f, onEnd = { _, _ ->
             state = DrawerState.CLOSED
         })
     }
@@ -33,7 +33,7 @@ data class DrawerController(
     fun open() {
         state = DrawerState.OPENING
 
-        animation.animateTo(targetValue = 1f, onEnd = { _, _ ->
+        animation.animateTo(targetValue = 0f, onEnd = { _, _ ->
             state = DrawerState.OPEN
         })
     }

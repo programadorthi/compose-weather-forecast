@@ -3,6 +3,7 @@ package br.com.programadorthi.compose
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.remember
+import androidx.compose.state
 import androidx.ui.animation.animatedFloat
 import androidx.ui.core.setContent
 import androidx.ui.foundation.Box
@@ -16,24 +17,26 @@ import br.com.programadorthi.compose.composables.Background
 import br.com.programadorthi.compose.composables.Drawer
 import br.com.programadorthi.compose.controllers.DrawerController
 import br.com.programadorthi.compose.helpers.LayoutFractionalOffset
-
-val drawerWidth = 125.dp
+import br.com.programadorthi.compose.models.drawerItems
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val drawerItems = drawerItems()
+
         setContent {
             val controller = remember {
-                DrawerController(animation = animatedFloat(initVal = 0f))
+                DrawerController(animation = animatedFloat(initVal = 1f))
             }
+
+            val state = state { drawerItems.first() }
 
             MaterialTheme {
                 Stack(children = {
                     Background()
                     Box(modifier = LayoutGravity.TopStart + LayoutPadding(top = 24.dp)) {
-                        AppBar(onMenuItemClick = {
-                            controller.open()
-                        })
+                        AppBar(controller, state)
                     }
                     // TODO: should have a clickable in out area to hide drawer
                     // TODO: clickable doesn't support HitTestBehavior
@@ -43,7 +46,9 @@ class MainActivity : AppCompatActivity() {
                             dy = 0f
                         )
                     ) {
-                        Drawer(drawerWidth, onClick = { controller.close() })
+                        Drawer(controller, drawerItems) { item ->
+                            state.value = item
+                        }
                     }
                 })
             }
