@@ -3,8 +3,7 @@ package br.com.programadorthi.compose
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.remember
-import androidx.ui.animation.DpToVectorConverter
-import androidx.ui.animation.animatedValue
+import androidx.ui.animation.animatedFloat
 import androidx.ui.core.setContent
 import androidx.ui.foundation.Box
 import androidx.ui.layout.LayoutGravity
@@ -16,7 +15,7 @@ import br.com.programadorthi.compose.composables.AppBar
 import br.com.programadorthi.compose.composables.Background
 import br.com.programadorthi.compose.composables.Drawer
 import br.com.programadorthi.compose.controllers.DrawerController
-import br.com.programadorthi.compose.helpers.LayoutOffset
+import br.com.programadorthi.compose.helpers.LayoutFractionalOffset
 
 val drawerWidth = 125.dp
 
@@ -25,13 +24,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             val controller = remember {
-                DrawerController(
-                    drawerWidth = drawerWidth,
-                    animation = animatedValue(
-                        initVal = drawerWidth,
-                        converter = DpToVectorConverter
-                    )
-                )
+                DrawerController(animation = animatedFloat(initVal = 0f))
             }
 
             MaterialTheme {
@@ -45,9 +38,9 @@ class MainActivity : AppCompatActivity() {
                     // TODO: should have a clickable in out area to hide drawer
                     // TODO: clickable doesn't support HitTestBehavior
                     Box(
-                        modifier = LayoutGravity.CenterEnd + LayoutOffset(
+                        modifier = LayoutGravity.CenterEnd + LayoutFractionalOffset(
                             dx = controller.animationProgress,
-                            dy = 0.dp
+                            dy = 0f
                         )
                     ) {
                         Drawer(drawerWidth, onClick = { controller.close() })
