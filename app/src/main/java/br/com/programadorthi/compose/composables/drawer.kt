@@ -46,7 +46,7 @@ fun Drawer(
                     controller.close()
                 }) {
                     Text(
-                        text = "${item.dayName}\n${item.monthName} ${item.day}",
+                        text = item.withLineBreak(),
                         style = TextStyle(
                             color = Color.White,
                             fontSize = 14.sp,

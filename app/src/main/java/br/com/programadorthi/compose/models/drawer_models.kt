@@ -12,7 +12,10 @@ data class DrawerItem(
     val day: String,
     val dayName: String,
     val monthName: String
-)
+) {
+    fun withComma() = "$dayName, $monthName $day"
+    fun withLineBreak() = "$dayName\n$monthName $day"
+}
 
 fun drawerItems(): List<DrawerItem> {
     val items = mutableListOf<DrawerItem>()

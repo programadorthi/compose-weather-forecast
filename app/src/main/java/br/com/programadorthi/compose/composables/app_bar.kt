@@ -23,7 +23,7 @@ import br.com.programadorthi.compose.models.DrawerItem
 
 @Composable
 fun AppBar(
-    controller: DrawerController,
+    drawerController: DrawerController,
     state: State<DrawerItem>
 ) {
     val surfaceColor = Color.Transparent
@@ -47,7 +47,7 @@ fun AppBar(
                     Column {
                         Box {
                             Clip(shape = RectangleShape) {
-                                AnimatedTitle(state.value)
+                                AnimatedTitle(title = state.value.withComma())
                             }
                         }
                         Text(
@@ -66,7 +66,7 @@ fun AppBar(
                     ) + LayoutAlign.Center
                 ) {
                     Clickable(onClick = {
-                        controller.open()
+                        drawerController.open()
                     }) {
                         Icon(icon = icDrawer, tint = Color.White)
                     }

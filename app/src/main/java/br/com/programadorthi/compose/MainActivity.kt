@@ -26,8 +26,12 @@ class MainActivity : AppCompatActivity() {
         val drawerItems = drawerItems()
 
         setContent {
-            val controller = remember {
-                DrawerController(animation = animatedFloat(initVal = 1f))
+            val drawerController = remember {
+                DrawerController(
+                    animation = animatedFloat(initVal = 1f).apply {
+                        setBounds(min = 0f, max = 1f)
+                    }
+                )
             }
 
             val state = state { drawerItems.first() }
@@ -36,17 +40,17 @@ class MainActivity : AppCompatActivity() {
                 Stack(children = {
                     Background()
                     Box(modifier = LayoutGravity.TopStart + LayoutPadding(top = 24.dp)) {
-                        AppBar(controller, state)
+                        AppBar(drawerController, state)
                     }
                     // TODO: should have a clickable in out area to hide drawer
                     // TODO: clickable doesn't support HitTestBehavior
                     Box(
                         modifier = LayoutGravity.CenterEnd + LayoutFractionalOffset(
-                            dx = controller.animationProgress,
+                            dx = drawerController.animationProgress,
                             dy = 0f
                         )
                     ) {
-                        Drawer(controller, drawerItems) { item ->
+                        Drawer(drawerController, drawerItems) { item ->
                             state.value = item
                         }
                     }
