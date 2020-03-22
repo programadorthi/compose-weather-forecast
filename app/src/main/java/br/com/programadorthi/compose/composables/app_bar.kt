@@ -18,7 +18,7 @@ import br.com.programadorthi.compose.R
 
 
 @Composable
-fun AppBar() {
+fun AppBar(onMenuItemClick: () -> Unit) {
     val surfaceColor = Color.Transparent
     val icDrawer = vectorResource(id = R.drawable.ic_baseline_arrow_forward_ios_24)
     val appBarHeight = 60.dp
@@ -59,7 +59,7 @@ fun AppBar() {
                         appBarHeight
                     ) + LayoutAlign.Center
                 ) {
-                    Clickable(onClick = { println(">>>>> i=clicked") }) {
+                    Clickable(onClick = onMenuItemClick) {
                         Icon(icon = icDrawer, tint = Color.White)
                     }
                 }

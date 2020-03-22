@@ -20,9 +20,7 @@ import java.util.*
 import kotlin.math.pow
 
 @Composable
-fun Drawer(drawerWidth: Dp) {
-    val icRefresh = vectorResource(id = R.drawable.ic_baseline_refresh_24)
-
+fun Drawer(drawerWidth: Dp, onClick: () -> Unit) {
     Box(
         modifier = LayoutWidth(drawerWidth) + LayoutHeight.Fill,
         backgroundColor = Color(0xAA234060),
@@ -36,9 +34,9 @@ fun Drawer(drawerWidth: Dp) {
             mainAxisSize = SizeMode.Expand
         ) {
             // TODO: icon doesn't have properties to resize the icon
-            Icon(icon = icRefresh, tint = Color.White)
+            Icon(icon = vectorResource(id = R.drawable.ic_baseline_refresh_24), tint = Color.White)
             for (item in drawerItems()) {
-                Clickable(onClick = { println(">>>> item: $item") }) {
+                Clickable(onClick = onClick) {
                     Text(
                         text = "${item.dayName}\n${item.monthName} ${item.day}",
                         style = TextStyle(
