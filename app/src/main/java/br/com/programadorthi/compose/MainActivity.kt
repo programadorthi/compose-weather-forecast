@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
 
             MaterialTheme {
                 Stack(children = {
-                    ForecastContent()
+                    ForecastContent(state.value)
 
                     Box(modifier = LayoutGravity.TopStart + LayoutPadding(top = 24.dp)) {
                         AppBar(drawerController, state)
