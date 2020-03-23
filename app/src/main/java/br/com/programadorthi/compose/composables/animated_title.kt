@@ -14,7 +14,7 @@ import androidx.ui.unit.TextUnit
 import br.com.programadorthi.compose.helpers.LayoutFractionalOffset
 import br.com.programadorthi.compose.models.AppTitle
 
-val TweenBuilder = TweenBuilder<Float>().apply {
+private val TweenBuilder = TweenBuilder<Float>().apply {
     duration = 750
     easing = FastOutSlowInEasing
 }

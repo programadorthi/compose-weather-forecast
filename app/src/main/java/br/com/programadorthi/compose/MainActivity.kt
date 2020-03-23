@@ -18,12 +18,14 @@ import br.com.programadorthi.compose.composables.ForecastContent
 import br.com.programadorthi.compose.controllers.DrawerController
 import br.com.programadorthi.compose.helpers.LayoutFractionalOffset
 import br.com.programadorthi.compose.models.drawerItems
+import br.com.programadorthi.compose.models.forecasts
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         val drawerItems = drawerItems()
+        val forecasts = forecasts()
 
         setContent {
             val drawerController = remember {
@@ -38,7 +40,7 @@ class MainActivity : AppCompatActivity() {
 
             MaterialTheme {
                 Stack(children = {
-                    ForecastContent(state.value)
+                    ForecastContent(state.value, forecasts)
 
                     Box(modifier = LayoutGravity.TopStart + LayoutPadding(top = 24.dp)) {
                         AppBar(drawerController, state)

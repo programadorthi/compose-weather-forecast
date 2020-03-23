@@ -21,7 +21,7 @@ data class RadialItem(
     val selected: Boolean = false
 )
 
-val forecasts = listOf(
+fun forecasts() = listOf(
     RadialItem(
         icon = R.drawable.ic_baseline_wb_rainy_24,
         title = time(),
