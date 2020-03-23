@@ -13,8 +13,8 @@ import androidx.ui.layout.Stack
 import androidx.ui.material.MaterialTheme
 import androidx.ui.unit.dp
 import br.com.programadorthi.compose.composables.AppBar
-import br.com.programadorthi.compose.composables.Background
 import br.com.programadorthi.compose.composables.Drawer
+import br.com.programadorthi.compose.composables.ForecastContent
 import br.com.programadorthi.compose.controllers.DrawerController
 import br.com.programadorthi.compose.helpers.LayoutFractionalOffset
 import br.com.programadorthi.compose.models.drawerItems
@@ -38,10 +38,12 @@ class MainActivity : AppCompatActivity() {
 
             MaterialTheme {
                 Stack(children = {
-                    Background()
+                    ForecastContent()
+
                     Box(modifier = LayoutGravity.TopStart + LayoutPadding(top = 24.dp)) {
                         AppBar(drawerController, state)
                     }
+
                     // TODO: should have a clickable in out area to hide drawer
                     // TODO: clickable doesn't support HitTestBehavior
                     Box(

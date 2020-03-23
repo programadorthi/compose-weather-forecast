@@ -34,7 +34,7 @@ data class Circle(
     val alpha: Float
 )
 
-fun maskCircle(canvas: Canvas, size: PxSize, radius: Float, centerOffset: Offset) {
+fun Canvas.maskCircle(size: PxSize, radius: Float, centerOffset: Offset) {
     val path = Path().apply {
         setFillType(PathFillType.evenOdd)
         addRect(Rect.fromLTWH(0f, 0f, size.width.value, size.height.value))
@@ -45,7 +45,7 @@ fun maskCircle(canvas: Canvas, size: PxSize, radius: Float, centerOffset: Offset
             )
         )
     }
-    canvas.clipPath(path)
+    clipPath(path)
 }
 
 @Composable
@@ -108,7 +108,6 @@ fun WhiteCircleDraw(centerOffset: Offset = Offset.zero, circles: List<Circle>) {
             val previousCircle = circles[index - 1]
 
             maskCircle(
-                this,
                 parentSize,
                 previousCircle.radius,
                 centerOffset
@@ -137,7 +136,6 @@ fun WhiteCircleDraw(centerOffset: Offset = Offset.zero, circles: List<Circle>) {
 
         // Mask the area of the final circle
         maskCircle(
-            this,
             parentSize,
             lastCircle.radius,
             centerOffset
