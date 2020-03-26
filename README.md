@@ -15,6 +15,11 @@ Screenshots
 - There is no HitTestBehavior to Clickable
 - Icon doesn't have a property to resize it
 
+## Next steps
+
+- Upgrade to new Compose version that is breaking build for now
+- Add particles system to create rain effect
+
 ## Credits
 - [Chris Slowik](https://dribbble.com/chrisslowik) that created this awesome [Weather design](https://dribbble.com/shots/1212896-Weather-Rebound)
 - [Matt Carroll](https://github.com/matthew-carroll) for the Flutter challenge before works at Flutter team
