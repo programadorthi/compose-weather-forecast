@@ -55,7 +55,7 @@ fun AnimatedTitle(title: String) {
 
 @Composable
 private fun CustomText(
-    modifier: LayoutFractionalOffset = LayoutFractionalOffset.Zero,
+    modifier: LayoutFractionalOffset = LayoutFractionalOffset.Origin,
     text: String
 ) {
     Text(

@@ -1,6 +1,33 @@
 package br.com.programadorthi.compose.helpers
 
-import androidx.animation.AnimatedFloat
+import androidx.animation.*
+
+enum class ParticleStates {
+    HIDE, SHOW
+}
+
+val ParticlesProgress = FloatPropKey()
+
+val ParticlesAnimation = transitionDefinition {
+    state(ParticleStates.HIDE) {
+        this[ParticlesProgress] = 0f
+    }
+
+    state(ParticleStates.SHOW) {
+        this[ParticlesProgress] = 1f
+    }
+
+    transition(fromState = ParticleStates.HIDE, toState = ParticleStates.SHOW) {
+        ParticlesProgress using repeatable<Float> {
+            iterations = Infinite
+
+            animation = tween {
+                easing = FastOutLinearInEasing
+                duration = 300
+            }
+        }
+    }
+}
 
 interface Animation {
     val value: Float

@@ -61,6 +61,7 @@ private val halfScreenWidth = displayMetrics.widthPixels / 4.6
 fun ForecastContent(item: DrawerItem, forecasts: List<RadialItem>) {
     Stack {
         Background()
+        RainParticles()
         Temperature()
         RadialForecastList(item, forecasts)
     }
