@@ -6,6 +6,8 @@ enum class ParticleStates {
     HIDE, SHOW
 }
 
+val easeInOut = CubicBezierEasing(0.42f, 0f, 0.58f, 1f)
+
 val ParticlesProgress = FloatPropKey()
 
 val ParticlesAnimation = transitionDefinition {
@@ -29,55 +31,22 @@ val ParticlesAnimation = transitionDefinition {
     }
 }
 
-interface Animation {
-    val value: Float
+data class TweenEasing(
+    private val begin: Float,
+    private val end: Float,
+    private val easing: Easing = LinearEasing
+) : Easing {
+    override fun invoke(fraction: Float): Float =
+        begin + (end - begin) * easing.invoke(fraction)
 }
 
-abstract class Animatable {
-    fun animate(parent: Animation): Animation = AnimatedEvaluation(parent, this)
-    fun evaluate(animation: Animation) = transform(animation.value)
-    abstract fun transform(time: Float): Float
-}
-
-data class CurvedAnimation(
-    private val parent: AnimatedFloat,
-    private val curve: Curve?
-) : Animation {
-    override val value: Float
-        get() {
-            val time = parent.value
-            if (curve != null) {
-                return when (time == 0f || time == 1f) {
-                    true -> time
-                    false -> curve.transform(time)
-                }
-            }
-            return time
-        }
-}
-
-/**
- * A ported version from Flutter. The current Tween animation is private.
- * Maybe in the future the Android team turns it public
- */
-data class Tween(
-    val begin: Float,
-    val end: Float
-) : Animatable() {
-    override fun transform(time: Float) = when (time) {
-        0f -> begin
-        1f -> end
-        else -> lerp(time)
+data class IntervalEasing(
+    private val begin: Float,
+    private val end: Float,
+    private val easing: Easing = LinearEasing
+) : Easing {
+    override fun invoke(fraction: Float): Float {
+        val localFraction = ((fraction - begin) / (end - begin)).coerceIn(0f, 1f)
+        return easing.invoke(localFraction)
     }
-
-    private fun lerp(time: Float) = begin + (end - begin) * time
-}
-
-private data class AnimatedEvaluation(
-    private val parent: Animation,
-    private val animatable: Animatable
-) : Animation {
-
-    override val value: Float
-        get() = animatable.evaluate(parent)
 }

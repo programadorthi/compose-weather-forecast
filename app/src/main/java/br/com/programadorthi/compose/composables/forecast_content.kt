@@ -91,17 +91,13 @@ fun RadialForecastList(
             val itemDuration = itemDelay + SLIDE_INTERVAL
             val endSlidingAngle = FIRST_ITEM_ANGLE + (angleDiffPerItem * index)
 
-            return@mapIndexed Tween(
+            return@mapIndexed TweenEasing(
                 begin = START_SLIDING_ANGLE.toFloat(),
-                end = endSlidingAngle.toFloat()
-            ).animate(
-                parent = CurvedAnimation(
-                    parent = slideAnimation,
-                    curve = Interval(
-                        begin = itemDelay,
-                        end = itemDuration,
-                        curve = easeInOut
-                    )
+                end = endSlidingAngle.toFloat(),
+                easing = IntervalEasing(
+                    begin = itemDelay,
+                    end = itemDuration,
+                    easing = easeInOut
                 )
             )
         }
@@ -126,7 +122,7 @@ fun RadialForecastList(
     Stack {
         forecasts.forEachIndexed { index, forecast ->
             Align(alignment = Alignment.CenterStart) {
-                RadialPositioned(angle = animations[index].value) {
+                RadialPositioned(angle = animations[index].invoke(slideAnimation.value)) {
                     Opacity(
                         opacity = when (radialState.value) {
                             RadialState.CLOSED -> MIN_BOUND
