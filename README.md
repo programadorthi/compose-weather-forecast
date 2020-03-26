@@ -17,8 +17,8 @@ Screenshots
 
 ## Next steps
 
-- Upgrade to new Compose version that is breaking build for now
-- Add particles system to create rain effect
+- [ ] Upgrade to new Compose version that is breaking build for now
+- [X] Add particles system to create rain effect
 
 ## Credits
 - [Chris Slowik](https://dribbble.com/chrisslowik) that created this awesome [Weather design](https://dribbble.com/shots/1212896-Weather-Rebound)
